@@ -18,6 +18,7 @@
                 if(message === 'get') {
                     var storageData = localStorage.getItem('test');
                     event.source.postMessage(storageData, event.origin);
+console.log(storageData);
                 }
                 // getでなければメッセージを分割してlocalstorageに保存する
                 else {
