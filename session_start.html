@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 1 自社LP想定ここでセッションキーをブラウザに配布</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: blue;
+        }
+        .link {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to Our Landing Page 1 セッションを埋め込むだけのページ</h1>
+
+<a href="http://localhost:8080/test/2.html">別ドメインクライアントページ</a>
+
+<script>
+    async function setSessionKey() {
+        const apiUrl = 'http://localhost:8080/api/get.php';
+
+        try {
+            // fetchを使ってAPIにGETリクエストを送る
+            const response = await fetch(apiUrl);
+
+            // レスポンスがOK（ステータス200）であることを確認
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+
+            // レスポンスをテキストとして取得
+            const sessionKey = await response.text();
+
+            var data = { es_session: sessionKey }; // ここに実際のデータを設定
+            localStorage.setItem("session", sessionKey);
+
+            // 取得したテキストデータをコンソールに表示
+            console.log(sessionKey);
+        } catch (error) {
+            // エラーが発生した場合にエラーメッセージをコンソールに表示
+            console.error('There has been a problem with your fetch operation:', error);
+        }
+    }
+
+    setSessionKey();
+</script>
+</body>
+</html>
