@@ -9,6 +9,7 @@
     (function() {
         var origin = 'http://localhost:8080.com';
         window.addEventListener('message', function(event) {
+            console.log(event.origin);
             // 送信元が指定のオリジンと一致していれば処理を行う
             if(event.origin === origin) {
                 var message = event.data;
