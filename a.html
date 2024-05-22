@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You Page</title>
+</head>
+<body>
+<script>
+    (function() {
+        var origin = 'http://localhost:8080.com';
+        window.addEventListener('message', function(event) {
+            // 送信元が指定のオリジンと一致していれば処理を行う
+            if(event.origin === origin) {
+                var message = event.data;
+
+                // メッセージが'get'ならlocalstorageの値を返す
+                if(message === 'get') {
+                    var storageData = localStorage.getItem('test');
+                    event.source.postMessage(storageData, event.origin);
+                }
+                // getでなければメッセージを分割してlocalstorageに保存する
+                else {
+                    var messageArray = message.split(',');
+                    var key = messageArray[0];
+                    var value = messageArray[1];
+                    localStorage.setItem(key, value);
+                }
+            }
+        });
+    })();
+</script>
+</body>
+</html>
